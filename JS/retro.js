@@ -19,7 +19,7 @@ const displayPosts = (posts) => {
         const postCard = document.createElement('div');
         postCard.classList = `bg-[#797DFC]/10 border border-[#797DFC] rounded-3xl p-6 lg:p-10`;
         postCard.innerHTML = `
-                <div class="flex gap-6">
+                <div class="flex flex-col md:flex-row gap-6">
                     <div id= "${post.id}-online" class="avatar online hidden">
                         <div class="w-24 h-24 rounded-full">
                             <img src="${post.image}" />
@@ -49,7 +49,7 @@ const displayPosts = (posts) => {
                         </div>
                     </div>
                 </div>
-                <div class="flex ml-32 mt-3">
+                <div class="flex ml-0 lg:ml-32 mt-3">
                     <div class="flex items-center gap-2 mr-5">
                         <div>
                             <i class="fa-regular fa-message"></i>
