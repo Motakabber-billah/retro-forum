@@ -15,7 +15,7 @@ const displayPosts = (posts) => {
     postContainer.innerHTML = ''; // Clear previous results
 
     posts.forEach(post => {
-        console.log(post);
+        // console.log(post);
         const postCard = document.createElement('div');
         postCard.classList = `bg-[#797DFC]/10 border border-[#797DFC] rounded-3xl p-6 lg:p-10`;
         postCard.innerHTML = `
@@ -88,12 +88,12 @@ const displayPosts = (posts) => {
 
 // handle read as mark button
 const readMarkCard = async (id) => {
-    console.log('Marked as read',id);
+    // console.log('Marked as read',id);
     const res = await fetch(`https://openapi.programming-hero.com/api/retro-forum/posts`);
     const data = await res.json();
     const post = data.posts.find(p => p.id === +id);
     // console.log(data);
-    console.log(post);
+    // console.log(post);
 
     const statusOnline = document.getElementById(`${post.id}-online`);
     statusOnline.classList.remove('hidden');
@@ -129,7 +129,7 @@ const readMarkCard = async (id) => {
 const handleSearch = () => {
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
-    console.log(searchText);
+    // console.log(searchText);
      if (searchText === '') {
         loadAllPosts(); // Show all posts if search is empty
     } else {
@@ -138,3 +138,56 @@ const handleSearch = () => {
     loadAllPosts(searchText);
 }
 loadAllPosts();
+
+
+// Latest Post Section
+const loadLatestPosts = async () => {
+    const res = await fetch('https://openapi.programming-hero.com/api/retro-forum/latest-posts');
+    const data = await res.json();
+    // console.log(data);
+    displayLatestPosts(data);
+}
+
+const displayLatestPosts = (data) => {
+    const latestPostContainer = document.getElementById('latest-post-container');
+    data.forEach(data => {
+        console.log(data);
+        const latestPostCard = document.createElement('div');
+        latestPostCard.classList = ``;
+        latestPostCard.innerHTML = `
+                    <div class="card w-96 bg-base-100 shadow-xl">
+                        <figure class="px-10 pt-10">
+                            <img src="${data.cover_image}" alt="" class="rounded-xl" />
+                        </figure>
+                        <div class="card-body ">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div>
+                                    <img src="images/Frame.png" alt="">
+                                </div>
+                                <div>
+                                    <h3 class="text-base font-normal text-[#12132D]">${data.author.posted_date || 'Not Available'} </h3>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <h3 class="text-base text-[#12132D] font-extrabold">${data.description}</h3>
+                            </div>
+                            <div class="mb-3">
+                                <h3 class="text-base text-[#12132D]/60 font-normal">
+                                ${data.title}</h3>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div>
+                                    <img class="w-11 h-11 rounded-full" src="${data.profile_image}" alt="">
+                                </div>
+                                <div>
+                                    <h3 class="text-base text-[#12132D] font-extrabold">${data.author.name}</h3>
+                                    <h3 class="text-base text-[#12132D]/60 font-normal">${data.author.designation || 'Not Available'}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        `;
+        latestPostContainer.appendChild(latestPostCard);
+    });
+}
+loadLatestPosts();
